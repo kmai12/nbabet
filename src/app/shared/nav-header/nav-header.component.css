@@ -32,6 +32,11 @@
     margin: 0;
   }
 
+  #title > a {
+    text-decoration: none;
+    color: black;
+  }
+
   #nav-bar {
     min-width: 40%;
   }
