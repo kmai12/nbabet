@@ -9,8 +9,17 @@ import { AboutComponent } from './about/about.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { UserService } from './_services/user.service';
+import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
+import { fakeBackendProvider } from './_helpers/fake-backend';
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule
+  ],
   declarations: [
     AppComponent,
     HomeComponent,
@@ -19,12 +28,10 @@ import { LoginComponent } from './login/login.component';
     RegisterComponent,
     LoginComponent
     ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ReactiveFormsModule
+  providers: [
+    UserService,
+    fakeBackendProvider
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

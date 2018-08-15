@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
 import { User } from '../models/user';
+import { UserService } from '../_services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -9,17 +13,22 @@ import { User } from '../models/user';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  loading = false;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      points: ['']
+      points: ['', Validators.nullValidator]
     });
   }
 
@@ -32,6 +41,16 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    // todo: http request
+    this.loading = true;
+    this.userService.register(this.registerForm.value)
+      .pipe(first()) // what does this do?
+      .subscribe(
+        _ => {
+          this.router.navigate(['/login']);
+        },
+        error => {
+          this.loading = false;
+        }
+      );
   }
 }
