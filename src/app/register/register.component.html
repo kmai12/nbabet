@@ -1,0 +1,39 @@
+<div class="container">
+  <h1>Register Account</h1>
+  <form id='register-form' #registerForm="ngForm">
+    <div class="form-group">
+      <label for="first-name">First Name</label>
+      <input type="text" class="form-control" id="first-name" required 
+        [(ngModel)]="model.firstName" name="first-name" #firstName="ngModel">
+        <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
+          First Name is required
+        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="last-name">Last Name</label>
+      <input type="text" class="form-control" id="last-name" required
+      [(ngModel)]="model.lastName" name="last-name" #lastName="ngModel">
+      <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
+          Last Name is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" required
+      [(ngModel)]="model.email" name="email" #email="ngModel">
+      <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+          Email is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="points">Points</label>
+      <input type="number" class="form-control" id="points" [(ngModel)]="model.points" name="points">
+    </div>
+
+    <button type="submit" class="btn btn-success pull-right">Submit</button>
+
+  </form>
+</div>

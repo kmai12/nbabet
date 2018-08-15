@@ -1,0 +1,16 @@
+.container {
+    width: 500px;
+}
+
+#register-form {
+    text-align: left;
+    padding: 25px 75px;
+}
+
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */
+}
+  
+.ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+}
