@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../models/user';
 
 @Component({
@@ -6,19 +7,31 @@ import { User } from '../models/user';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-// export class RegisterComponent implements OnInit {
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
+  registerForm: FormGroup;
+  submitted = false;
 
-  model: User = new User(1, 'Aqib', 'Malik', 'am@gmail.com', 0);
+  constructor(private formBuilder: FormBuilder) { }
 
-  submitted; boolean = false;
+  ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', Validators.required, Validators.email],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      points: ['']
+    });
+  }
 
-  // constructor() { }
-  // ngOnInit() {
-  // }
+  get f() { return this.registerForm.controls; }
 
-  onSubmit() { this.submitted = true; }
+  onSubmit() {
+    this.submitted = true;
 
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
+    if (this.registerForm.invalid) {
+      return;
+    }
+
+    // todo: http request
+  }
 }
