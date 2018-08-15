@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { UserService } from './_services/user.service';
 import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 import { fakeBackendProvider } from './_helpers/fake-backend';
+import { AuthenticationService } from './_services/authentication.service';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { fakeBackendProvider } from './_helpers/fake-backend';
     ],
   providers: [
     UserService,
+    AuthenticationService,
     fakeBackendProvider
   ],
   bootstrap: [AppComponent]
