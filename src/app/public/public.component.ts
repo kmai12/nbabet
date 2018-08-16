@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../_services/authentication.service';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from '../_services/authentication.service';
 
 @Component({
-  selector: 'app-nav-header',
-  templateUrl: './nav-header.component.html',
-  styleUrls: ['./nav-header.component.css']
+  selector: 'app-public',
+  templateUrl: './public.component.html',
+  styleUrls: ['./public.component.css']
 })
-export class NavHeaderComponent implements OnInit {
+export class PublicComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
 
   constructor(private authenticationService: AuthenticationService) { }

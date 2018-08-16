@@ -2,13 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 // @Injectable({
 //   providedIn: 'root'
 // })
 @Injectable()
 export class AuthenticationService {
+  private loggedIn = new BehaviorSubject<boolean>(false);
+
   constructor(private http: HttpClient) { }
+
+  get isLoggedIn() {
+    this.loggedIn.next(localStorage.getItem('currentUser') != null);
+    return this.loggedIn.asObservable();
+  }
 
   login(email: string, password: string) {
     return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { email: email, password: password })
@@ -17,6 +25,7 @@ export class AuthenticationService {
         if (user && user.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(user));
+          this.loggedIn.next(true);
         }
 
         return user;
@@ -26,5 +35,7 @@ export class AuthenticationService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
+
+    this.loggedIn.next(false);
   }
 }

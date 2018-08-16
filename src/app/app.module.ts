@@ -13,6 +13,8 @@ import { UserService } from './_services/user.service';
 import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 import { fakeBackendProvider } from './_helpers/fake-backend';
 import { AuthenticationService } from './_services/authentication.service';
+import { PublicComponent } from './public/public.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   imports: [
@@ -27,7 +29,9 @@ import { AuthenticationService } from './_services/authentication.service';
     NavHeaderComponent,
     AboutComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    PublicComponent,
+    MainComponent
     ],
   providers: [
     UserService,
