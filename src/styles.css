@@ -6,3 +6,8 @@ body {
     margin: 0px;
     text-align: center;
 }
+
+.content {
+    min-height: calc(100vh - 91px);
+    padding-bottom: 0;
+  }
