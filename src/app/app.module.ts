@@ -15,6 +15,7 @@ import { fakeBackendProvider } from './_helpers/fake-backend';
 import { AuthenticationService } from './_services/authentication.service';
 import { PublicComponent } from './public/public.component';
 import { MainComponent } from './main/main.component';
+import { FooterComponent } from './shared/footer/footer.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { MainComponent } from './main/main.component';
     RegisterComponent,
     LoginComponent,
     PublicComponent,
-    MainComponent
+    MainComponent,
+    FooterComponent
     ],
   providers: [
     UserService,

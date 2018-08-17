@@ -1,0 +1,19 @@
+.footer {
+    background-color: #ddd;
+    text-align: right;
+    padding: 15px;
+    margin-top: 0;
+  }
+  
+  .footer-info {
+    display: flex;
+    justify-content: space-around;
+    width: 200px;
+    margin-left: auto;
+    padding: 2.5px;
+  }
+  
+  .footer-info > a {
+    color: black;
+    text-decoration: none;
+  }

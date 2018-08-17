@@ -1,5 +1,5 @@
 .header-container {
-    background-color: #eee;
+    background-color: #1d428a;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -11,6 +11,7 @@
     /* padding: 5px; */
     padding: 0px;
     margin: 0px;
+    color: #eee;
   }
   
   #header-img {
@@ -34,7 +35,7 @@
 
   #title > a {
     text-decoration: none;
-    color: black;
+    color: white;
   }
 
   #nav-bar {
@@ -53,5 +54,5 @@
   
   .nav-list > li > a {
     text-decoration: none;
-    color: black;
+    color: white;
   }
