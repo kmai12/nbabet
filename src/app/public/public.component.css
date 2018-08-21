@@ -1,18 +1,26 @@
-.picture-swipe {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: grey;
-    height: 400px;
+.picture {
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background-image: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.6)), url("../../assets/images/nbahoop1.jpg"); */
+    background-image: 
+    linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ),
+    url("../../assets/images/nbahoop1.jpg");
+    height: 350px;
     width: auto;
 }
 
-.start {
-    margin-top: 300px;
+.picture-info {
+    display: inline-block;
+    color: white;
+    margin-top: 110px;
+    margin-left: 90px;
 }
 
 button {
-    background-color: orangered;
+    background-color: #1d428a;
     border-radius: 4px;
     color: white;
     font-size: 1em;

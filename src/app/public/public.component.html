@@ -1,11 +1,9 @@
 <div *ngIf="!(isLoggedIn$ | async);">
-  <div class='picture-swipe'>
-    <div class='picture'>    
-      <div class='start'>
-        <button>Register</button>
-        <button>Login</button>
-      </div>
+  <div class='picture'>
+    <div class='picture-info'>
+      <h2>Bet on nba statistics<br> with your friends.</h2>
+      <button routerLink='/register'>Register</button>
+      <button routerLink='/login'>Login</button>
     </div>
   </div>
 </div>
-

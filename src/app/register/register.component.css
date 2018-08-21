@@ -1,6 +1,7 @@
 .form-container {
     width: 350px;
     margin: 15px auto;
+    text-align: center;
 }
 
 #register-form {
