@@ -39,16 +39,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 }
             }
 
-            // // get users
-            // if (request.url.endsWith('/users') && request.method === 'GET') {
-            //     // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
-            //     if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
-            //         return of(new HttpResponse({ status: 200, body: users }));
-            //     } else {
-            //         // return 401 not authorised if token is null or invalid
-            //         return throwError({ error: { message: 'Unauthorised' } });
-            //     }
-            // }
+            // get users
+            if (request.url.endsWith('/users') && request.method === 'GET') {
+                // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
+                if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
+                    return of(new HttpResponse({ status: 200, body: users }));
+                } else {
+                    // return 401 not authorised if token is null or invalid
+                    return throwError({ error: { message: 'Unauthorised' } });
+                }
+            }
 
             // // get user by id
             // if (request.url.match(/\/users\/\d+$/) && request.method === 'GET') {

@@ -10,19 +10,23 @@ import { AppRoutingModule } from './/app-routing.module';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { UserService } from './_services/user.service';
-import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { fakeBackendProvider } from './_helpers/fake-backend';
 import { AuthenticationService } from './_services/authentication.service';
 import { PublicComponent } from './public/public.component';
 import { MainComponent } from './main/main.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { ChallengeComponent } from './challenge/challenge.component';
+import { AppLoadModule } from './app-load/app-load.module';
+import { JwtInterceptor } from './_helpers/jwt-interceptor';
 
 @NgModule({
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppLoadModule
   ],
   declarations: [
     AppComponent,
@@ -33,11 +37,13 @@ import { FooterComponent } from './shared/footer/footer.component';
     LoginComponent,
     PublicComponent,
     MainComponent,
-    FooterComponent
+    FooterComponent,
+    ChallengeComponent
     ],
   providers: [
     UserService,
     AuthenticationService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     fakeBackendProvider
   ],
   bootstrap: [AppComponent]
