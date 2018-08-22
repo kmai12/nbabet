@@ -2,8 +2,8 @@
   <h2>Challenge</h2>
   <ul>
     <li *ngFor="let user of users">
-      <span>{{user}}</span>
-      <button>Challenge</button>
+      <span>{{user.email}}</span>
+      <button (click)="challenge(user)">Challenge</button>
     </li>
   </ul>
 </div>

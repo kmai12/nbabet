@@ -8,8 +8,7 @@ import { User } from '../models/user';
   styleUrls: ['./challenge.component.css']
 })
 export class ChallengeComponent implements OnInit {
-  // public users: User[];
-  public users: string[];
+  public users: User[];
 
   constructor(
     private userService: UserService
@@ -21,7 +20,12 @@ export class ChallengeComponent implements OnInit {
   }
 
   getUsers(): void {
-    this.userService.getAll().subscribe(users => this.users = users.map(u => u.email));
+    this.userService.getAll().subscribe(users => this.users = users);
+  }
+
+  challenge(user: User): void {
+    console.log('challengeClick:: user.email: ' + user.email);
+    // todo: modal match /pick your player pop up.
   }
 
 }
