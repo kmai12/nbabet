@@ -21,6 +21,8 @@ import { AppLoadModule } from './app-load/app-load.module';
 import { JwtInterceptor } from './_helpers/jwt-interceptor';
 import { ModalComponent } from './_directives/modal.component';
 import { ModalService } from './_services/modal.service';
+import { MatchComponent } from './challenge/match/match.component';
+import { PlayersComponent } from './players/players.component';
 
 @NgModule({
   imports: [
@@ -42,7 +44,9 @@ import { ModalService } from './_services/modal.service';
     MainComponent,
     FooterComponent,
     ChallengeComponent,
-    ModalComponent
+    ModalComponent,
+    MatchComponent,
+    PlayersComponent
     ],
   providers: [
     UserService,

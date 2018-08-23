@@ -10,7 +10,6 @@ import { ModalService } from '../_services/modal.service';
 })
 export class ChallengeComponent implements OnInit {
   public users: User[];
-  private bodyText: string;
 
   constructor(
     private userService: UserService,
@@ -20,7 +19,6 @@ export class ChallengeComponent implements OnInit {
   ngOnInit() {
     this.getUsers();
     // this.users = ['ABCDE', 'Johnathan', 'PoolBCD', 'Chromeo', 'JoBromeo', 'ABCDUDE', 'XYZMAN', 'VatoWoman', 'MikeHunt'];
-    this.bodyText = 'This text can be updated in modal 1';
   }
 
   getUsers(): void {

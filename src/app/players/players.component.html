@@ -1,0 +1,10 @@
+<div class="list-container"> 
+    <h2>Choose a@a.com's player.</h2>
+    <ul>
+      <li *ngFor="let user of users"
+      [class.selected]="user === selectedPlayer"
+      (click)="onSelect(user)">
+        <span>{{user}}</span>
+      </li>
+    </ul>
+  </div>

@@ -24,23 +24,25 @@ app-modal {
   
     position: fixed;
     top: 0;
-    right: 0;
+    /* right: 0; */
     bottom: 0;
-    left: 0;
     /* z-index must be higher than .app-modal-background */
-  
+    left: 50%;
+    transform: translateX(-50%);
+
     z-index: 1000;
     /* enables scrolling for tall modals */
   
     overflow: auto;
   }
+
   app-modal .app-modal .app-modal-body {
     padding: 20px;
     background: #fff;
     /* margin exposes part of the modal background */
-  
     margin: 40px;
   }
+
   app-modal .app-modal-background {
     /* modal background fixed across whole screen */
   

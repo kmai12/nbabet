@@ -16,6 +16,12 @@ ul {
     overflow-y: auto;
 }
 
+.selected {
+    /* background-color: #CFD8DC !important; */
+    /* color: white; */
+    background-color: rgba(222, 231, 93, 0.87) !important;
+  }
+
 li:hover {
     background-color: rgba(221, 221, 221, 0.5);
 }

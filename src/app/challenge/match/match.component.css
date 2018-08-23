@@ -1,0 +1,35 @@
+#match-container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+app-players {
+    margin: 20px;
+}
+
+.bet-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+
+.bet-label {
+    margin-right: 5px;
+}
+
+.bet-amount {
+    width: 70px;   
+}
+
+#confirm-button {
+    display: block;
+    margin: auto;
+}
