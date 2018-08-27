@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { User } from '../models/user';
 import { ModalService } from '../_services/modal.service';
+import { NbaService } from '../_services/nba.service';
 
 @Component({
   selector: 'app-challenge',
@@ -14,11 +15,15 @@ export class ChallengeComponent implements OnInit {
   constructor(
     private userService: UserService,
     private modalService: ModalService,
+    private nbaService: NbaService
   ) { }
 
   ngOnInit() {
     this.getUsers();
-    // this.users = ['ABCDE', 'Johnathan', 'PoolBCD', 'Chromeo', 'JoBromeo', 'ABCDUDE', 'XYZMAN', 'VatoWoman', 'MikeHunt'];
+    // do list:
+    const team = this.nbaService.getTeam('jazz');
+
+    // JSON.parse();
   }
 
   getUsers(): void {

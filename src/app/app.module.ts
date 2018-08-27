@@ -23,6 +23,7 @@ import { ModalComponent } from './_directives/modal.component';
 import { ModalService } from './_services/modal.service';
 import { MatchComponent } from './challenge/match/match.component';
 import { PlayersComponent } from './players/players.component';
+import { NbaService } from './_services/nba.service';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { PlayersComponent } from './players/players.component';
     AuthenticationService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }, //  Interceptor to add authentication header.
     fakeBackendProvider, // fake backend.
-    ModalService
+    ModalService,
+    NbaService
   ],
   bootstrap: [AppComponent]
 })
