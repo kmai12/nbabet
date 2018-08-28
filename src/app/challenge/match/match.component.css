@@ -33,3 +33,8 @@ app-players {
     display: block;
     margin: auto;
 }
+
+.hidden {
+    display: none;
+    /* visibility: hidden; */
+}

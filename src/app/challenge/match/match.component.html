@@ -1,19 +1,22 @@
 <div id="match-container">
     <h1>Match Up</h1>
-    
-    <div class="container">
-        <app-players id="player1"></app-players>
-        <app-players id="player2"></app-players>  
-    </div>
-    <div class="bet-container">
-        <div>
-            <label class="bet-label" for="p1-bet-amount">P1 Bet Amount</label>
-            <input class="bet-amount" id="p1-bet-amount" type="number" value="50">
+    <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="container">
+            <input type="text" class="hidden" formControlName="player1" />
+            <app-players id="player1" [user]="user1"></app-players>
+            <input type="text" class="hidden" formControlName="player2" />
+            <app-players id="player2" [user]="user2"></app-players> 
         </div>
-        <div>
-            <label class="bet-label" for="p2-bet-amount">P2 Bet Amount</label>
-            <input class="bet-amount" id="p2-bet-amount" type="number" value="50">
+        <div class="bet-container">
+            <div>
+                <label class="bet-label" for="p1-bet-amount">P1 Bet Amount</label>
+                <input class="bet-amount" id="p1-bet-amount" type="number" value="50" formControlName="bet1">
+            </div>
+            <div>
+                <label class="bet-label" for="p2-bet-amount">P2 Bet Amount</label>
+                <input class="bet-amount" id="p2-bet-amount" type="number" value="50" formControlName="bet2">
+            </div>
         </div>
-    </div>
-    <button id="confirm-button">Confirm Match</button>
+        <button id="confirm-button">Confirm Match</button>
+    </form>
 </div>

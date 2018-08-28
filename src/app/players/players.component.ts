@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { NbaService } from '../_services/nba.service';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-players',
@@ -6,17 +8,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./players.component.css']
 })
 export class PlayersComponent implements OnInit {
-  public selectedPlayer: string;
-  public users: string[];
+  @Input() user: User;
+  public teams: [];
+  public players: [];
+  public selectedPlayer: [];
+  public selectedTeam: string;
 
   constructor(
+    private nbaService: NbaService
   ) { }
 
   ngOnInit() {
-    this.users = ['ABCDE', 'Johnathan', 'PoolBCD', 'Chromeo', 'JoBromeo', 'ABCDUDE', 'XYZMAN', 'VatoWoman', 'MikeHunt'];
+    this.nbaService.getPlayers('jazz').subscribe(
+      t => {
+        // console.log(t);
+        this.players = t.resultSets[0].rowSet;
+      });
   }
 
-  onSelect(player: string): void {
+  onSelect(player: []): void {
     this.selectedPlayer = player;
   }
 }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject } from 'rxjs';
+import { User } from '../models/user';
 
 // @Injectable({
 //   providedIn: 'root'
@@ -12,6 +13,14 @@ export class AuthenticationService {
   private loggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) { }
+
+  get currentUser(): User {
+    if (this.isLoggedIn) {
+      return JSON.parse(localStorage.getItem('currentUser'));
+    }
+
+    return null;
+  }
 
   get isLoggedIn() {
     this.loggedIn.next(localStorage.getItem('currentUser') != null);
