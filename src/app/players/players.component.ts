@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NbaService } from '../_services/nba.service';
 import { User } from '../models/user';
 
@@ -9,9 +9,11 @@ import { User } from '../models/user';
 })
 export class PlayersComponent implements OnInit {
   @Input() user: User;
-  public teams: [];
-  public players: [];
-  public selectedPlayer: [];
+  @Output() playerSelect = new EventEmitter<any[]>();
+
+  public teams: any[];
+  public players: any[];
+  public selectedPlayer: any[];
   public selectedTeam: string;
 
   constructor(
@@ -26,7 +28,8 @@ export class PlayersComponent implements OnInit {
       });
   }
 
-  onSelect(player: []): void {
+  onSelect(player: any[]): void {
+    this.playerSelect.emit(player);
     this.selectedPlayer = player;
   }
 }
