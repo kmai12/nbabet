@@ -1,5 +1,8 @@
 <div *ngIf="(isLoggedIn$ | async);">
-  <div class="challenge-container">
+  <div class="widget-container">
     <app-challenge></app-challenge>
+  </div>
+  <div class="widget-container">
+    <app-matchlist></app-matchlist>
   </div>
 </div>

@@ -1,0 +1,38 @@
+h2 {
+    text-align: center;
+}
+
+.table-container {
+    background-color : #ddd;
+    padding: 5px 20px 5px 20px;
+    border: 2px solid #ddd; 
+    border-radius: 1%;
+}
+
+table {
+    background-color: white;
+    height: 200px;
+    min-width: 100%;
+    padding: 0;
+    overflow-y: auto;
+}
+
+table > tbody > tr:hover {
+    background-color: rgba(221, 221, 221, 0.5);
+}
+
+li {
+    list-style: none;
+    padding: 3px 5px 3px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+td > button {
+    background-color: rgba(72, 180, 72, 0.664);
+    font-size:70%;
+    border: none;
+    border-radius: 2%;
+}

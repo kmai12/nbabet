@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+import { Match } from '../models/match';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -115,7 +116,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             // }
 
             // Match //////////////////////////////////////////////////////////////
-            const matches: any[] = JSON.parse(localStorage.getItem('matches')) || [];
+            const matches: Match[] = JSON.parse(localStorage.getItem('matches')) || [];
 
             // create match
             if (request.url.endsWith('/match/create') && request.method === 'POST') {
@@ -137,6 +138,23 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 return of(new HttpResponse({ status: 200 }));
             }
 
+            // getall matches
+            if (request.url.match(/match\/getall\/\d+/) && request.method === 'GET') {
+                // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
+                if (request.headers.get('Authorization') !== 'Bearer fake-jwt-token') {
+                    return throwError({ error: { message: 'Unauthorised' } });
+                }
+                // find user by id in users array
+                const urlParts = request.url.split('/');
+                const userId = parseInt(urlParts[urlParts.length - 1]);
+
+                const myChallenges: Match[] = matches.filter(m => m.user1.id === userId);
+                const myChallenges2: Match[] = matches.filter(m => m.user2.id === userId );
+
+                const myMatches: Match[][ = [myChallenges, myChallenges2];
+
+                return of(new HttpResponse({ status: 200, body: myMatches }));
+            }
             // pass through any requests not handled above
             return next.handle(request);
         }))

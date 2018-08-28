@@ -1,0 +1,28 @@
+<div class="table-container"> 
+  <h2>Matches</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Opponent</th>
+          <th>Your Player</th>
+          <th>Opponent Player</th>
+          <th>Your Bet</th>
+          <th>Opponent Bet</th>
+          <th>State1</th>
+          <th>State2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of matches">
+            <td>{{m.user2.email}}</td>
+            <td>{{m.player1[3]}}</td>
+            <td>{{m.player2[3]}}</td>
+            <td>{{m.bet1}}</td>
+            <td>{{m.bet2}}</td>
+            <td>{{m.state1}}</td>
+            <td>{{m.state2}}</td>
+            <td><button (click)="view(match)">View</button></td>
+        </tr>
+      </tbody>        
+    </table>
+</div>

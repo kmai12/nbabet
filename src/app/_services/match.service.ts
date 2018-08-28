@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class MatchService {
-  private url = `${environment.apiUrl}/match/`;
+  private url = `${environment.apiUrl}/match`;
 
   constructor(private http: HttpClient) { }
 
@@ -16,16 +16,20 @@ export class MatchService {
     return this.http.get<Match>(`${this.url}/${id}`);
   }
 
+  getAllByUserId(id: number): Observable<Match[][]> {
+    return this.http.get<Match[][]>(`${this.url}/getall/${id}`);
+  }
+
   public create(match: Match): Observable<object> {
-    return this.http.post(`${this.url}create`, match);
+    return this.http.post(`${this.url}/create`, match);
   }
 
   public update(match: Match): Observable<object> {
-    return this.http.put(`${this.url}update`, match);
+    return this.http.put(`${this.url}/update`, match);
   }
 
   public delete(id: number): Observable<object> {
-    return this.http.put(`${this.url}delete`, id);
+    return this.http.put(`${this.url}/delete`, id);
   }
 
 }
