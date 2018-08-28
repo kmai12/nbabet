@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
+import { Match } from '../models/match';
 
 @Injectable()
 export class AppLoadService {
@@ -16,6 +17,11 @@ export class AppLoadService {
           localStorage.setItem('users', JSON.stringify(users));
         }
 
+        const matches = this.generateMatches();
+        if (localStorage.getItem('matches') == null) {
+          localStorage.setItem('matches', JSON.stringify(matches));
+        }
+
         resolve();
       }, 1);
     });
@@ -24,7 +30,6 @@ export class AppLoadService {
 
   generateUsers(): User[] {
     const users: User[] = [];
-    // for (let i = 0; i < 10; i++) { users.push(new User(i, `First{i}`, `Last{i}`, `a@a`, '1231232', 150)); }
     users.push(new User(1, 'a', 'a', 'a@a.com', '123123', 125));
     users.push(new User(2, 'b', 'b', 'b@b.com', '123123', 125));
     users.push(new User(3, 'John', 'Jacobs', 'johnjacobs@gmail.com', '123123', 125));
@@ -36,6 +41,11 @@ export class AppLoadService {
     users.push(new User(9, 'Bubble', 'Bubble', 'bubbles@gmail.com', '123123', 125));
     users.push(new User(10, 'Jay', 'Rock', 'jayrock@gmail.com', '123123', 125));
     return users;
+  }
+
+  generateMatches(): Match[] {
+    const matches: Match[] = [];
+    return matches;
   }
 
 }

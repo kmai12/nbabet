@@ -14,6 +14,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // wrap in delayed observable to simulate server api call
         return of(null).pipe(mergeMap(() => {
 
+            // Authentication //////////////////////////////////////////////////////////////
             // authenticate
             if (request.url.endsWith('/users/authenticate') && request.method === 'POST') {
                 // find if any user matches login credentials
@@ -39,6 +40,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 }
             }
 
+            // Users //////////////////////////////////////////////////////////////
             // get users
             if (request.url.endsWith('/users') && request.method === 'GET') {
                 // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
@@ -111,6 +113,29 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             //         return throwError({ error: { message: 'Unauthorised' } });
             //     }
             // }
+
+            // Match //////////////////////////////////////////////////////////////
+            const matches: any[] = JSON.parse(localStorage.getItem('matches')) || [];
+
+            // create match
+            if (request.url.endsWith('/match/create') && request.method === 'POST') {
+                // get new user object from post body
+                const newMatch = request.body;
+
+                // validation
+                const duplicateMatch = matches.filter(match => match.id === newMatch.id ).length;
+                if (duplicateMatch) {
+                    return throwError({ error: { message: 'Match "' + newMatch.id + '" is already created' } });
+                }
+
+                // save new match
+                newMatch.id = matches.length + 1;
+                matches.push(newMatch);
+                localStorage.setItem('matches', JSON.stringify(matches));
+
+                // respond 200 OK
+                return of(new HttpResponse({ status: 200 }));
+            }
 
             // pass through any requests not handled above
             return next.handle(request);

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { User } from '../../models/user';
 import { Match } from '../../models/match';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatchService } from '../../_services/match.service';
 
 @Component({
   selector: 'app-match',
@@ -18,7 +19,8 @@ export class MatchComponent implements OnInit {
   match: Match;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private matchService: MatchService
   ) { }
 
   ngOnInit() {
@@ -52,7 +54,8 @@ export class MatchComponent implements OnInit {
     }
 
     // todo: backend match service.
-    // this.matchService.create(this.form.value);
+    this.matchService.create(this.form.value).subscribe();
+    // todo: close modal.
   }
 
   onPlayerSelected1(player: any[]): void {
