@@ -151,7 +151,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 const myChallenges: Match[] = matches.filter(m => m.user1.id === userId);
                 const myChallenges2: Match[] = matches.filter(m => m.user2.id === userId );
 
-                const myMatches: Match[][ = [myChallenges, myChallenges2];
+                const myMatches: Match[][] = [myChallenges, myChallenges2];
 
                 return of(new HttpResponse({ status: 200, body: myMatches }));
             }
