@@ -11,12 +11,9 @@ import { MatchService } from '../../_services/match.service';
 })
 export class MatchComponent implements OnInit {
   form: FormGroup;
-  @Input() user1: User;
-  @Input() user2: User;
+  @Input() match: Match;
   player1: any[];
   player2: any[];
-
-  match: Match;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,7 +44,7 @@ export class MatchComponent implements OnInit {
     state1 = 'Proposed';
     state2 = 'Challenged';
 
-    this.form.patchValue({user1: this.user1, user2: this.user2, player1: this.player1, player2: this.player2, state1: state1, state2: state2});
+    this.form.patchValue({user1: this.match.user1, user2: this.match.user2, player1: this.player1, player2: this.player2, state1: state1, state2: state2});
     console.log(this.form.value);
     if (this.form.invalid) {
       return;

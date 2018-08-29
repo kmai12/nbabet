@@ -4,6 +4,7 @@ import { User } from '../models/user';
 import { ModalService } from '../_services/modal.service';
 import { NbaService } from '../_services/nba.service';
 import { AuthenticationService } from '../_services/authentication.service';
+import { Match } from '../models/match';
 
 @Component({
   selector: 'app-challenge',
@@ -12,8 +13,8 @@ import { AuthenticationService } from '../_services/authentication.service';
 })
 export class ChallengeComponent implements OnInit {
   public users: User[];
+  public currentMatch: Match;
   public user1: User;
-  public user2: User;
 
   constructor(
     private userService: UserService,
@@ -32,20 +33,17 @@ export class ChallengeComponent implements OnInit {
   }
 
   challenge(user: User): void {
-    console.log('challengeClick:: user.email: ' + user.email);
-    this.user2 = user;
-    // this.user2 = this.users.filter(u => u.id === user.id)[0];
-
-    // todo: modal match /pick your player pop up.
+    this.currentMatch = new Match(0, this.user1, user, null, null, 0, 0, '', '');
+    // todo: use child control method to update controls q/ new match values.
     this.openModal('custom-modal-1');
   }
 
   openModal(id: string) {
     this.modalService.open(id);
-}
+  }
 
-closeModal(id: string) {
+  closeModal(id: string) {
     this.modalService.close(id);
-}
+  }
 
 }

@@ -3,18 +3,18 @@
     <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="container">
             <!-- <input id="player1" type="text" class="hidden" formControlName="player1" /> -->
-            <app-players id="player-picker1" [user]="user1" (playerSelect)="onPlayerSelected1($event)"></app-players>
+            <app-players id="player-picker1" [user]="match?.user1" (playerSelect)="onPlayerSelected1($event)"></app-players>
             <!-- <input id="player2" type="text" class="hidden" formControlName="player2" /> -->
-            <app-players id="player-picker2" [user]="user2" (playerSelect)="onPlayerSelected2($event)"></app-players> 
+            <app-players id="player-picker2" [user]="match?.user2" (playerSelect)="onPlayerSelected2($event)"></app-players> 
         </div>
         <div class="bet-container">
             <div>
                 <label class="bet-label" for="p1-bet-amount">P1 Bet Amount</label>
-                <input class="bet-amount" id="p1-bet-amount" type="number" value="50" formControlName="bet1">
+                <input class="bet-amount" id="p1-bet-amount" type="number" [value]="match?.bet1" formControlName="bet1">
             </div>
             <div>
                 <label class="bet-label" for="p2-bet-amount">P2 Bet Amount</label>
-                <input class="bet-amount" id="p2-bet-amount" type="number" value="50" formControlName="bet2">
+                <input class="bet-amount" id="p2-bet-amount" type="number" [value]="match?.bet2" formControlName="bet2">
             </div>
         </div>
         <button id="confirm-button">Confirm Match</button>

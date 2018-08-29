@@ -3,6 +3,7 @@ import { Match } from '../models/match';
 import { User } from '../models/user';
 import { MatchService } from '../_services/match.service';
 import { AuthenticationService } from '../_services/authentication.service';
+import { ModalService } from '../_services/modal.service';
 
 @Component({
   selector: 'app-matchlist',
@@ -11,13 +12,15 @@ import { AuthenticationService } from '../_services/authentication.service';
 })
 export class MatchlistComponent implements OnInit {
   user: User;
+  currentMatch: Match;
   matches: Match[];
   challenges: Match[];
   challengers: Match[];
 
   constructor(
     private matchService: MatchService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {
@@ -31,6 +34,21 @@ export class MatchlistComponent implements OnInit {
        console.log(m);
        console.log(this.matches);
      });
+  }
+
+  viewMatch(match: Match): void {
+    // this.user2 = user;
+    this.currentMatch = match;
+    // todo: use child control method to update controls q/ new match values.
+    this.openModal('custom-modal-2');
+  }
+
+  openModal(id: string) {
+    this.modalService.open(id);
+  }
+
+  closeModal(id: string) {
+    this.modalService.close(id);
   }
 
 }

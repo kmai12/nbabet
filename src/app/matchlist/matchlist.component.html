@@ -21,8 +21,12 @@
             <td>{{m.bet2}}</td>
             <td>{{m.state1}}</td>
             <td>{{m.state2}}</td>
-            <td><button (click)="view(match)">View</button></td>
+            <td><button (click)="viewMatch(m)">View</button></td>
         </tr>
       </tbody>        
     </table>
 </div>
+
+<app-modal id="custom-modal-2">
+  <app-match [match]="currentMatch"></app-match>
+</app-modal>
