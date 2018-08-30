@@ -33,7 +33,7 @@ export class MatchComponent implements OnInit {
 
   get f() { return this.form.controls; }
 
-  updateMatch(match): void {
+  updateMatch(match: Match): void {
     this.match = match;
 
     this.form.patchValue({user1: this.match.user1, user2: this.match.user2,
