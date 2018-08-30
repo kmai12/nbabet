@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Match } from '../models/match';
 import { User } from '../models/user';
 import { MatchService } from '../_services/match.service';
 import { AuthenticationService } from '../_services/authentication.service';
 import { ModalService } from '../_services/modal.service';
+import { MatchComponent } from '../challenge/match/match.component';
 
 @Component({
   selector: 'app-matchlist',
@@ -11,8 +12,10 @@ import { ModalService } from '../_services/modal.service';
   styleUrls: ['./matchlist.component.css']
 })
 export class MatchlistComponent implements OnInit {
+  @ViewChild(MatchComponent)
+  private matchComponent: MatchComponent;
+
   user: User;
-  currentMatch: Match;
   matches: Match[];
   challenges: Match[];
   challengers: Match[];
@@ -37,9 +40,7 @@ export class MatchlistComponent implements OnInit {
   }
 
   viewMatch(match: Match): void {
-    // this.user2 = user;
-    this.currentMatch = match;
-    // todo: use child control method to update controls q/ new match values.
+    this.matchComponent.updateMatch(match);
     this.openModal('custom-modal-2');
   }
 

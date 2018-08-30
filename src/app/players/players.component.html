@@ -2,7 +2,7 @@
     <h2 *ngIf="user">Choose {{user.email}} player.</h2>
     <ul>
       <li *ngFor="let player of players"
-      [class.selected]="player === selectedPlayer"
+      [class.selected]="selectedPlayer != null && player[3] === selectedPlayer[3]"
       (click)="onSelect(player)">
         <span>{{player[3]}}</span>
       </li>

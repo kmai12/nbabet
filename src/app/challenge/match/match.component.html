@@ -2,10 +2,8 @@
     <h1>Match Up</h1>
     <form id="form" [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="container">
-            <!-- <input id="player1" type="text" class="hidden" formControlName="player1" /> -->
-            <app-players id="player-picker1" [user]="match?.user1" (playerSelect)="onPlayerSelected1($event)"></app-players>
-            <!-- <input id="player2" type="text" class="hidden" formControlName="player2" /> -->
-            <app-players id="player-picker2" [user]="match?.user2" (playerSelect)="onPlayerSelected2($event)"></app-players> 
+                <app-players id="player-picker1" [user]="match?.user1" [selectedPlayer]="match?.player1" (playerChange)="onPlayerSelected1($event)"></app-players>
+                <app-players id="player-picker2" [user]="match?.user2" [selectedPlayer]="match?.player2" (playerChange)="onPlayerSelected2($event)"></app-players> 
         </div>
         <div class="bet-container">
             <div>

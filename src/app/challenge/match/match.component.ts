@@ -11,9 +11,7 @@ import { MatchService } from '../../_services/match.service';
 })
 export class MatchComponent implements OnInit {
   form: FormGroup;
-  @Input() match: Match;
-  player1: any[];
-  player2: any[];
+  match: Match;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,11 +29,18 @@ export class MatchComponent implements OnInit {
       state1: ['', Validators.required],
       state2: ['', Validators.required],
     });
-
-    // this.match = new Match(0, this.user1, this.user2, null, null, 50, 50, 'Proposed', 'Challenged');
   }
 
   get f() { return this.form.controls; }
+
+  updateMatch(match): void {
+    this.match = match;
+
+    this.form.patchValue({user1: this.match.user1, user2: this.match.user2,
+      player1: this.match.player1, player2: this.match.player2,
+      bet1: 0, bet2: 0,
+      state1: this.match.state1, state2: this.match.state2});
+  }
 
   onSubmit() {
 
@@ -44,23 +49,22 @@ export class MatchComponent implements OnInit {
     state1 = 'Proposed';
     state2 = 'Challenged';
 
-    this.form.patchValue({user1: this.match.user1, user2: this.match.user2, player1: this.player1, player2: this.player2, state1: state1, state2: state2});
+    this.form.patchValue({user1: this.match.user1, user2: this.match.user2, player1: this.match.player1, player2: this.match.player2, state1: state1, state2: state2});
     console.log(this.form.value);
     if (this.form.invalid) {
       return;
     }
 
-    // todo: backend match service.
     this.matchService.create(this.form.value).subscribe();
     // todo: close modal.
   }
 
   onPlayerSelected1(player: any[]): void {
-    this.player1 = player;
+    this.match.player1 = player; // also without this, setting player1 to null doesn't update playercomponent's selected player for some reason.
   }
 
   onPlayerSelected2(player: any[]): void {
-    this.player2 = player;
+    this.match.player2 = player;
   }
 
 }

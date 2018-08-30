@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { NbaService } from '../_services/nba.service';
 import { User } from '../models/user';
 
@@ -9,11 +9,11 @@ import { User } from '../models/user';
 })
 export class PlayersComponent implements OnInit {
   @Input() user: User;
-  @Output() playerSelect = new EventEmitter<any[]>();
+  @Input() selectedPlayer: any[];
+  @Output() playerChange = new EventEmitter<any[]>();
 
   public teams: any[];
   public players: any[];
-  public selectedPlayer: any[];
   public selectedTeam: string;
 
   constructor(
@@ -23,13 +23,13 @@ export class PlayersComponent implements OnInit {
   ngOnInit() {
     this.nbaService.getPlayers('jazz').subscribe(
       t => {
-        // console.log(t);
         this.players = t.resultSets[0].rowSet;
       });
   }
 
   onSelect(player: any[]): void {
-    this.playerSelect.emit(player);
+    console.log(this.selectedPlayer);
+    this.playerChange.emit(player);
     this.selectedPlayer = player;
   }
 }

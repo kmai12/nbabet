@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { User } from '../models/user';
 import { ModalService } from '../_services/modal.service';
 import { NbaService } from '../_services/nba.service';
 import { AuthenticationService } from '../_services/authentication.service';
 import { Match } from '../models/match';
+import { MatchComponent } from './match/match.component';
 
 @Component({
   selector: 'app-challenge',
@@ -12,8 +13,11 @@ import { Match } from '../models/match';
   styleUrls: ['./challenge.component.css']
 })
 export class ChallengeComponent implements OnInit {
+
+  @ViewChild(MatchComponent)
+  private matchComponent: MatchComponent;
+
   public users: User[];
-  public currentMatch: Match;
   public user1: User;
 
   constructor(
@@ -33,8 +37,8 @@ export class ChallengeComponent implements OnInit {
   }
 
   challenge(user: User): void {
-    this.currentMatch = new Match(0, this.user1, user, null, null, 0, 0, '', '');
-    // todo: use child control method to update controls q/ new match values.
+    const match: Match = new Match(0, this.user1, user, null, [], 0, 0, '', '');
+    this.matchComponent.updateMatch(match);
     this.openModal('custom-modal-1');
   }
 
