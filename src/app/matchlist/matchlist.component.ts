@@ -34,15 +34,24 @@ export class MatchlistComponent implements OnInit {
        this.matches = [].concat.apply([], m);
        this.challenges = m[0];
        this.challengers = m[1];
-       console.log(m);
-       console.log(this.matches);
      });
   }
 
-  viewMatch(match: Match): void {
-    this.matchComponent.updateMatch(match);
-    this.openModal('custom-modal-2');
+  acceptMatch(match: Match): void {
+    match.state2 = 'Accepted';
+    this.matchService.update(match).subscribe();
+    this.matchService.processMatch(match.id).subscribe();
   }
+
+  declineMatch(match: Match): void {
+    match.state2 = 'Denied';
+    this.matchService.update(match).subscribe();
+  }
+
+  // viewMatch(match: Match): void {
+  //   this.matchComponent.updateMatch(match);
+  //   this.openModal('custom-modal-2');
+  // }
 
   openModal(id: string) {
     this.modalService.open(id);

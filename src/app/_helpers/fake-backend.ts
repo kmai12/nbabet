@@ -3,6 +3,7 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import { Match } from '../models/match';
+import { MatchResults } from '../models/matchResults';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -132,6 +133,69 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 // save new match
                 newMatch.id = matches.length + 1;
                 matches.push(newMatch);
+                localStorage.setItem('matches', JSON.stringify(matches));
+
+                // respond 200 OK
+                return of(new HttpResponse({ status: 200 }));
+            }
+
+            // update match
+            if (request.url.endsWith('/match/update') && request.method === 'PUT') {
+                // get new user object from put body
+                const updatedMatch = request.body;
+
+                // validation
+                const index = matches.findIndex(match => match.id === updatedMatch.id);
+
+                if (index === -1) {
+                    return throwError({ error: { message: 'Match "' + updatedMatch.id + '" does not exist.' } });
+                }
+
+                // update match
+                matches[index] = updatedMatch;
+                localStorage.setItem('matches', JSON.stringify(matches));
+
+                // respond 200 OK
+                return of(new HttpResponse({ status: 200 }));
+            }
+
+            // process match
+            if (request.url.endsWith('/match/process') && request.method === 'POST') {
+                // get new user object from post body
+                const matchId: number = request.body;
+
+                // validation
+                const index = matches.findIndex(m => m.id === matchId);
+
+                if (index === -1) {
+                    return throwError({ error: { message: 'Match "' + matchId + '" does not exist.' } });
+                }
+
+                // process match
+                const match = matches[index];
+                match.results = new MatchResults(match.id, match.id, match.player1, match.player2, null, null, 'Draw');
+                match.results.matchId = match.id;
+                match.results.player1 = match.player1;
+                match.results.player2 = match.player2;
+
+                let state: 'P1Win' | 'P2Win' | 'Draw' = 'Draw';
+                const randomNumber = Math.floor(Math.random() * Math.floor(3));
+
+                switch (randomNumber) {
+                    case 0:
+                        state = 'P1Win';
+                        break;
+                    case 1:
+                        state = 'P2Win';
+                        break;
+                    case 2:
+                    default:
+                        state = 'Draw';
+                        break;
+                }
+
+                match.results.state = state;
+
                 localStorage.setItem('matches', JSON.stringify(matches));
 
                 // respond 200 OK

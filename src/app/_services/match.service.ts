@@ -32,4 +32,8 @@ export class MatchService {
     return this.http.put(`${this.url}/delete`, id);
   }
 
+  public processMatch(id: number): any {
+    return this.http.post(`${this.url}/process`, id);
+  }
+
 }

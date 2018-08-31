@@ -30,8 +30,15 @@ li {
     cursor: pointer;
 }
 
-td > button {
+.accept {
     background-color: rgba(72, 180, 72, 0.664);
+    font-size:70%;
+    border: none;
+    border-radius: 2%;
+}
+
+.decline {
+    background-color: rgba(252, 2, 2, 0.664);
     font-size:70%;
     border: none;
     border-radius: 2%;
