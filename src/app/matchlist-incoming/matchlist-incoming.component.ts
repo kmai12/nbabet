@@ -1,24 +1,22 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Match } from '../models/match';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatchComponent } from '../challenge/match/match.component';
 import { User } from '../models/user';
+import { Match } from '../models/match';
 import { MatchService } from '../_services/match.service';
 import { AuthenticationService } from '../_services/authentication.service';
 import { ModalService } from '../_services/modal.service';
-import { MatchComponent } from '../challenge/match/match.component';
 
 @Component({
-  selector: 'app-matchlist',
-  templateUrl: './matchlist.component.html',
-  styleUrls: ['./matchlist.component.css']
+  selector: 'app-matchlist-incoming',
+  templateUrl: './matchlist-incoming.component.html',
+  styleUrls: ['./matchlist-incoming.component.css']
 })
-export class MatchlistComponent implements OnInit {
+export class MatchlistIncomingComponent implements OnInit {
   @ViewChild(MatchComponent)
   private matchComponent: MatchComponent;
 
   user: User;
   matches: Match[];
-  // challenges: Match[];
-  // challengers: Match[];
 
   constructor(
     private matchService: MatchService,
@@ -31,9 +29,7 @@ export class MatchlistComponent implements OnInit {
 
     this.matchService.getAllByUserId(this.user.id).subscribe(
      m => {
-       this.matches = m[0];
-      //  this.challenges = m[0];
-      //  this.challengers = m[1];
+       this.matches = m[1];
      });
   }
 
@@ -45,18 +41,13 @@ export class MatchlistComponent implements OnInit {
 
   declineMatch(match: Match): void {
     match.state2 = 'Denied';
-    match.results.viewed = false;
+    match.results.viewed = true;
     this.matchService.update(match).subscribe();
   }
 
   viewMatch(match: Match): void {
-    match.results.viewed = true;
     this.matchComponent.updateMatch(match);
     this.openModal('custom-modal-2');
-  }
-
-  buttonToggle(m: Match): boolean {
-    return !m.results.viewed && m.state2 === 'Accepted';
   }
 
   openModal(id: string) {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { Match } from '../models/match';
+import { MatchResults } from '../models/matchResults';
 
 @Injectable()
 export class AppLoadService {
@@ -21,6 +22,7 @@ export class AppLoadService {
         if (localStorage.getItem('matches') == null) {
           localStorage.setItem('matches', JSON.stringify(matches));
         }
+        this.updateMatchesWithMatchResult();
 
         resolve();
       }, 1);
@@ -46,6 +48,19 @@ export class AppLoadService {
   generateMatches(): Match[] {
     const matches: Match[] = [];
     return matches;
+  }
+
+  updateMatchesWithMatchResult(): void {
+    const matches: Match[] = JSON.parse(localStorage.getItem('matches'));
+
+    matches.forEach(match => {
+      if (!match.results) {
+        match.results = new MatchResults(match.id, match.id, match.player1, match.player2, null, null, 'Draw', false);
+      }
+
+    });
+
+    localStorage.setItem('matches', JSON.stringify(matches));
   }
 
 }

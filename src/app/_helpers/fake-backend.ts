@@ -173,7 +173,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
                 // process match
                 const match = matches[index];
-                match.results = new MatchResults(match.id, match.id, match.player1, match.player2, null, null, 'Draw');
+                match.results = new MatchResults(match.id, match.id, match.player1, match.player2, null, null, 'Draw', false);
                 match.results.matchId = match.id;
                 match.results.player1 = match.player1;
                 match.results.player2 = match.player2;
