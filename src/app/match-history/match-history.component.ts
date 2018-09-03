@@ -7,11 +7,11 @@ import { AuthenticationService } from '../_services/authentication.service';
 import { ModalService } from '../_services/modal.service';
 
 @Component({
-  selector: 'app-matchlist-incoming',
-  templateUrl: './matchlist-incoming.component.html',
-  styleUrls: ['./matchlist-incoming.component.css']
+  selector: 'app-match-history',
+  templateUrl: './match-history.component.html',
+  styleUrls: ['./match-history.component.css']
 })
-export class MatchlistIncomingComponent implements OnInit {
+export class MatchHistoryComponent implements OnInit {
   @ViewChild(MatchComponent)
   private matchComponent: MatchComponent;
 
@@ -29,23 +29,14 @@ export class MatchlistIncomingComponent implements OnInit {
 
     this.matchService.getAllByUserId(this.user.id).subscribe(
      m => {
-       this.matches = m[1].filter(m2 => m2.results.viewed === false);
+       this.matches = m[0].concat(m[1]).filter( m2 => {
+         return m2.state1 === 'Denied' || m2.state2 === 'Denied' || m2.state1 === 'Accepted' || m2.state2 === 'Accepted';
+       });
      });
   }
 
-  acceptMatch(match: Match): void {
-    match.state2 = 'Accepted';
-    this.matchService.update(match).subscribe();
-    this.matchService.processMatch(match.id).subscribe();
-  }
-
-  declineMatch(match: Match): void {
-    match.state2 = 'Denied';
-    match.results.viewed = true;
-    this.matchService.update(match).subscribe();
-  }
-
   viewMatch(match: Match): void {
+    match.results.viewed = true;
     this.matchComponent.updateMatch(match);
     this.openModal('custom-modal-2');
   }

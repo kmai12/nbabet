@@ -1,5 +1,5 @@
 <div class="table-container"> 
-  <h2>Incoming Matches</h2>
+  <h2>Match History</h2>
     <table>
       <thead>
         <tr>
@@ -14,16 +14,14 @@
       </thead>
       <tbody>
         <tr *ngFor="let m of matches">
-            <td>{{m.user1.email}}</td>
-            <td>{{m.player2[3]}}</td>
+            <td>{{m.user2.email}}</td>
             <td>{{m.player1[3]}}</td>
-            <td>{{m.bet2}}</td>
+            <td>{{m.player2[3]}}</td>
             <td>{{m.bet1}}</td>
+            <td>{{m.bet2}}</td>
             <td>{{m.state1}}</td>
             <td>{{m.state2}}</td>
-            <td class="td-accept" *ngIf="m.state2 === 'Challenged'"><button class="button-accept" (click)="acceptMatch(m)">Accept</button></td>
-            <td class="td-decline" *ngIf="m.state2 === 'Challenged'"><button class="button-decline" (click)="declineMatch(m)">Decline</button></td>
-            <td class="td-view" *ngIf="m.state2 === 'Accepted'"><button class="button-view" (click)="viewMatch(m)">View</button></td>
+            <td class="td-view"><button class="button-view" (click)="viewMatch(m)">View</button></td>
         </tr>
         <tr class="tr-fill"></tr>
       </tbody>        

@@ -37,7 +37,7 @@ export class ChallengeComponent implements OnInit {
   }
 
   challenge(user: User): void {
-    const match: Match = new Match(0, this.user1, user, null, [], 0, 0, '', '');
+    const match: Match = new Match(0, this.user1, user, null, [], 0, 0, 'Proposed', 'Challenged', null);
     this.matchComponent.updateMatch(match);
     this.openModal('custom-modal-1');
   }

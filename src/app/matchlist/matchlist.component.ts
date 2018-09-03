@@ -31,10 +31,9 @@ export class MatchlistComponent implements OnInit {
 
     this.matchService.getAllByUserId(this.user.id).subscribe(
      m => {
-       this.matches = m[0];
-      //  this.challenges = m[0];
-      //  this.challengers = m[1];
-     });
+      this.matches = m[0].filter(m2 => m2.results.viewed === false);
+      // this.matches = m[0];
+    });
   }
 
   acceptMatch(match: Match): void {

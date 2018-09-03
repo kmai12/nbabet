@@ -26,6 +26,7 @@ import { PlayersComponent } from './players/players.component';
 import { NbaService } from './_services/nba.service';
 import { MatchlistComponent } from './matchlist/matchlist.component';
 import { MatchlistIncomingComponent } from './matchlist-incoming/matchlist-incoming.component';
+import { MatchHistoryComponent } from './match-history/match-history.component';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { MatchlistIncomingComponent } from './matchlist-incoming/matchlist-incom
     MatchComponent,
     PlayersComponent,
     MatchlistComponent,
-    MatchlistIncomingComponent
+    MatchlistIncomingComponent,
+    MatchHistoryComponent
     ],
   providers: [
     UserService,
