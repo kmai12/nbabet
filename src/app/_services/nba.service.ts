@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NbaService {
+  private url = `${environment.apiUrl}/api/nba`;
 
   constructor(private http: HttpClient) { }
 
   public getTeam(teamName: string): Observable<any> {
-    return this.http.get(`./assets/stats/teams/${teamName}.json`);
+    return this.http.get(`${this.url}/teams/${teamName}.json`);
   }
 
   // public getTeam(teamName: string): any {
@@ -36,6 +38,14 @@ export class NbaService {
   }
 
   public getPlayers(teamName: string): Observable<any> {
-    return this.http.get(`./assets/stats/teams/${teamName}.json`);
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    params: new HttpParams().append('team', teamName) };
+    return this.http.get(`${this.url}/teams`, httpOptions);
+  }
+
+  public getPlayerGameLog(player: any[]): Observable<any> {
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    params: new HttpParams().append('teamid', player[0]).append('playerid', player[12]) };
+    return this.http.get(`${this.url}/players`, httpOptions);
   }
 }

@@ -8,6 +8,7 @@ export class MatchResults {
         public game1: any[],
         public game2: any[],
         public state: 'P1Win' | 'P2Win' | 'Draw',
-        public viewed: boolean
+        public viewed1: boolean,
+        public viewed2: boolean
     ) {}
 }

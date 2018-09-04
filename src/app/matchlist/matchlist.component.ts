@@ -31,31 +31,31 @@ export class MatchlistComponent implements OnInit {
 
     this.matchService.getAllByUserId(this.user.id).subscribe(
      m => {
-      this.matches = m[0].filter(m2 => m2.results.viewed === false);
+      this.matches = m[0].filter(m2 => m2.results.viewed1 === false);
       // this.matches = m[0];
     });
   }
 
   acceptMatch(match: Match): void {
     match.state2 = 'Accepted';
-    this.matchService.update(match).subscribe();
     this.matchService.processMatch(match.id).subscribe();
+    this.matchService.update(match).subscribe();
   }
 
   declineMatch(match: Match): void {
     match.state2 = 'Denied';
-    match.results.viewed = false;
+    match.results.viewed1 = true;
     this.matchService.update(match).subscribe();
   }
 
   viewMatch(match: Match): void {
-    match.results.viewed = true;
+    match.results.viewed1 = true;
     this.matchComponent.updateMatch(match);
     this.openModal('custom-modal-2');
   }
 
   buttonToggle(m: Match): boolean {
-    return !m.results.viewed && m.state2 === 'Accepted';
+    return !m.results.viewed1 && m.state2 === 'Accepted';
   }
 
   openModal(id: string) {

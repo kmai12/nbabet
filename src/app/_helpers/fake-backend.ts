@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+import { delay, map, mergeMap, materialize, dematerialize, switchMap } from 'rxjs/operators';
 import { Match } from '../models/match';
 import { MatchResults } from '../models/matchResults';
+import { NbaService } from '../_services/nba.service';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
-    constructor() {}
+    constructor(private nbaService: NbaService,
+        private http: HttpClient) {}
 
     // todo: change username to email
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -122,7 +124,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             // create match
             if (request.url.endsWith('/match/create') && request.method === 'POST') {
                 // get new user object from post body
-                const newMatch = request.body;
+                const newMatch: Match = request.body;
 
                 // validation
                 const duplicateMatch = matches.filter(match => match.id === newMatch.id ).length;
@@ -130,8 +132,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return throwError({ error: { message: 'Match "' + newMatch.id + '" is already created' } });
                 }
 
-                // save new match
                 newMatch.id = matches.length + 1;
+
+                newMatch.results = new MatchResults(newMatch.id, newMatch.id, newMatch.player1, newMatch.player2, null, null, 'Draw', false, false);
+                newMatch.results.matchId = newMatch.id;
+                newMatch.results.player1 = newMatch.player1;
+                newMatch.results.player2 = newMatch.player2;
+
+                // save new match
                 matches.push(newMatch);
                 localStorage.setItem('matches', JSON.stringify(matches));
 
@@ -173,33 +181,52 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
                 // process match
                 const match = matches[index];
-                match.results = new MatchResults(match.id, match.id, match.player1, match.player2, null, null, 'Draw', false);
-                match.results.matchId = match.id;
-                match.results.player1 = match.player1;
-                match.results.player2 = match.player2;
+                let datalog1 = {};
+                return this.nbaService.getPlayerGameLog(match.player1).pipe(
+                    switchMap(r => {
+                        datalog1 = r;
+                        return this.nbaService.getPlayerGameLog(match.player2).pipe(
+                            map(datalog2 => {
+                                const x = datalog1;
+                                // todo: compare games.
+                                const game1log = x[0].resultSets[0].rowSet;
+                                const game1Num = Math.floor(Math.random() * game1log.length);
+                                const headers = x[0].resultSets[0].headers;
+                                const game1 = game1log[game1Num];
 
-                let state: 'P1Win' | 'P2Win' | 'Draw' = 'Draw';
-                const randomNumber = Math.floor(Math.random() * Math.floor(3));
+                                const game2log = datalog2[0].resultSets[0].rowSet;
+                                const game2Num = Math.floor(Math.random() * game2log.length);
+                                const game2 = game2log[game2Num];
 
-                switch (randomNumber) {
-                    case 0:
-                        state = 'P1Win';
-                        break;
-                    case 1:
-                        state = 'P2Win';
-                        break;
-                    case 2:
-                    default:
-                        state = 'Draw';
-                        break;
-                }
 
-                match.results.state = state;
+                                ///// fake
+                                let state: 'P1Win' | 'P2Win' | 'Draw' = 'Draw';
+                                const randomNumber = Math.floor(Math.random() * Math.floor(3));
 
-                localStorage.setItem('matches', JSON.stringify(matches));
+                                switch (randomNumber) {
+                                    case 0:
+                                        state = 'P1Win';
+                                        break;
+                                    case 1:
+                                        state = 'P2Win';
+                                        break;
+                                    case 2:
+                                    default:
+                                        state = 'Draw';
+                                        break;
+                                }
 
-                // respond 200 OK
-                return of(new HttpResponse({ status: 200 }));
+                                match.results.state = state;
+
+                                localStorage.setItem('matches', JSON.stringify(matches));
+
+                                // respond 200 OK
+                                return new HttpResponse({ status: 200 });
+                            })
+                        );
+                    })
+                );
+
             }
 
             // getall matches
@@ -219,6 +246,30 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
                 return of(new HttpResponse({ status: 200, body: myMatches }));
             }
+
+            // NBA BackEnd //////////////////////////////////////////////////////////////
+            const stats = './assets/stats';
+
+            if (request.url.match(/api\/nba\/teams*/) && request.method === 'GET') {
+                const teamName = request.params.get('team');
+
+                return this.http.get(`${stats}/teams/${teamName}.json`).pipe(
+                    map(r => new HttpResponse({ status: 200, body: r }))
+                );
+            }
+
+        if (request.url.match(/api\/nba\/players*/) && request.method === 'GET') {
+            const teamid = request.params.get('teamid');
+            const playerid = request.params.get('playerid');
+
+            return this.http.get(`${stats}/players/${teamid}.json`).pipe(
+                map(r => {
+                    const games = r['players'].filter(p => p.parameters['PlayerID'] === playerid);
+                    return new HttpResponse({ status: 200, body: games });
+                })
+            );
+        }
+
             // pass through any requests not handled above
             return next.handle(request);
         }))

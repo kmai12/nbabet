@@ -25,7 +25,7 @@ export class PlayersComponent implements OnInit {
       t => {
         this.players = t.resultSets[0].rowSet;
       });
-  }
+    }
 
   onSelect(player: any[]): void {
     console.log(this.selectedPlayer);

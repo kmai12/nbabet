@@ -5,6 +5,7 @@ import { Match } from '../models/match';
 import { MatchService } from '../_services/match.service';
 import { AuthenticationService } from '../_services/authentication.service';
 import { ModalService } from '../_services/modal.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-matchlist-incoming',
@@ -29,24 +30,31 @@ export class MatchlistIncomingComponent implements OnInit {
 
     this.matchService.getAllByUserId(this.user.id).subscribe(
      m => {
-       this.matches = m[1].filter(m2 => m2.results.viewed === false);
+       this.matches = m[1].filter(
+         m2 => m2.results.viewed2 === false);
      });
   }
 
   acceptMatch(match: Match): void {
     match.state2 = 'Accepted';
-    this.matchService.update(match).subscribe();
-    this.matchService.processMatch(match.id).subscribe();
+    let test = null;
+    // this.matchService.processMatch(match.id).subscribe();
+    this.matchService.processMatch(match.id).subscribe(r => {
+        test = r;
+        console.log(r);
+    });
+    // this.matchService.update(match).subscribe();
   }
 
   declineMatch(match: Match): void {
     match.state2 = 'Denied';
-    match.results.viewed = true;
+    match.results.viewed2 = true;
     this.matchService.update(match).subscribe();
   }
 
   viewMatch(match: Match): void {
-    this.matchComponent.updateMatch(match);
+    match.results.viewed2 = true;
+    this.matchService.update(match).subscribe();
     this.openModal('custom-modal-2');
   }
 

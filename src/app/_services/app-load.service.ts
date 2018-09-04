@@ -22,8 +22,8 @@ export class AppLoadService {
         if (localStorage.getItem('matches') == null) {
           localStorage.setItem('matches', JSON.stringify(matches));
         }
-        this.updateMatchesWithMatchResult();
-
+        // this.updateMatchesWithMatchResult();
+        // this.unviewMatches();
         resolve();
       }, 1);
     });
@@ -55,9 +55,20 @@ export class AppLoadService {
 
     matches.forEach(match => {
       if (!match.results) {
-        match.results = new MatchResults(match.id, match.id, match.player1, match.player2, null, null, 'Draw', false);
+        match.results = new MatchResults(match.id, match.id, match.player1, match.player2, null, null, 'Draw', false, false);
       }
 
+    });
+
+    localStorage.setItem('matches', JSON.stringify(matches));
+  }
+
+  unviewMatches(): void {
+    const matches: Match[] = JSON.parse(localStorage.getItem('matches'));
+
+    matches.forEach(match => {
+      match.results.viewed1 = false;
+      match.results.viewed2 = false;
     });
 
     localStorage.setItem('matches', JSON.stringify(matches));

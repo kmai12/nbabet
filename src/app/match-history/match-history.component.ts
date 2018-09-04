@@ -29,14 +29,13 @@ export class MatchHistoryComponent implements OnInit {
 
     this.matchService.getAllByUserId(this.user.id).subscribe(
      m => {
-       this.matches = m[0].concat(m[1]).filter( m2 => {
-         return m2.state1 === 'Denied' || m2.state2 === 'Denied' || m2.state1 === 'Accepted' || m2.state2 === 'Accepted';
-       });
+       this.matches = m[0].filter(m2 => m2.results.viewed1 === true)
+        .concat(m[1].filter( m2 => m2.results.viewed2 === true ));
      });
   }
 
   viewMatch(match: Match): void {
-    match.results.viewed = true;
+    match.results.viewed1 = true;
     this.matchComponent.updateMatch(match);
     this.openModal('custom-modal-2');
   }
